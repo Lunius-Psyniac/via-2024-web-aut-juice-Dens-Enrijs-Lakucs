@@ -1,4 +1,6 @@
 import { HomePage } from "../pageObjects/HomePage";
+import { LoginPage } from "../pageObjects/LoginPage";
+import { RegisterPage } from "../pageObjects/RegisterPage";
 
 describe("Juice-shop scenarios", () => {
   context("Without auto login", () => {
@@ -10,31 +12,55 @@ describe("Juice-shop scenarios", () => {
 
     it("Login", () => {
       // Click Account button
+      HomePage.accountButton.click();
       // Click Login button
+      HomePage.loginButton.click();
       // Set email value to "demo"
+      LoginPage.emailTextField.type("demo");
       // Set password value to "demo"
+      LoginPage.passwordTextField.type("demo");
       // Click Log in
+      LoginPage.loginButton.click();
       // Click Account button
+      HomePage.accountButton.click();
       // Validate that "demo" account name appears in the menu section
+      HomePage.userProfile.should("contain.text", "demo");
     });
 
-    it("Registration", () => {
+    it.only("Registration", () => {
       // Click Account button
+      HomePage.accountButton.click();
       // Login button
+      HomePage.loginButton.click();
       // Click "Not yet a customer?"
+      LoginPage.notYetCustomer.click();
       // Find - how to generate random number in JS
       // Use that number to genarate unique email address, e.g.: email_7584@ebox.com
+      const x = Math.floor(Math.random() * 10000);
       // Save that email address to some variable
+      const email = "email_"+x.toString()+"@ebox.com";
+      RegisterPage.emailTextField.type(email);
       // Fill in password field and repeat password field with same password
+      RegisterPage.passwordTextField.type("qwerty123");
+      RegisterPage.repeatPasswordTextField.type("qwerty123");
       // Click on Security Question menu
+      RegisterPage.securityQuestionsDropdown.click();
       // Select  "Name of your favorite pet?"
+      RegisterPage.securityQuestionsSelect.contains("Name of your favorite pet?").click();
       // Fill in answer
+      RegisterPage.securityQuestionsAnswer.type("Doggo");
       // Click Register button
+      RegisterPage.registerButton.click();
       // Set email value to previously created email
+      LoginPage.emailTextField.type(email);
       // Set password value to previously used password value
+      LoginPage.passwordTextField.type("qwerty123");
       // Click login button
+      LoginPage.loginButton.click();
       // Click Account button
+      HomePage.accountButton.click();
       // Validate that account name (with previously created email address) appears in the menu section
+      HomePage.userProfile.should("contain.text", email);
     });
   });
 
