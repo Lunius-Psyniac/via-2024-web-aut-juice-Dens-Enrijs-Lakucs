@@ -24,4 +24,24 @@ export class HomePage extends BasePage {
   static get userProfile(){
     return cy.get("[aria-label='Go to user profile']")
   }
+
+  static get clickSearchBar(){
+    return cy.get("[aria-label='Click to search']")
+  }
+
+  static get searchBarTextField(){
+    return cy.get("[id='mat-input-0']")
+  }
+
+  static get ordersAndPayments(){
+    return cy.get("[class='mat-menu-content ng-tns-c129-2']");
+  }
+
+  static get savedAddresses(){
+    return cy.get("[aria-label='Go to saved address page']");
+  }
+
+  static get myPaymentOptions(){
+    return cy.get("[aria-label='Go to saved payment methods page']");
+  }
 }
